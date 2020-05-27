@@ -1,2 +1,6 @@
 ﻿  Airline_System.cpp
-  Airline_System.vcxproj -> C:\MySource\Airline_System\Airline_System\x64\Debug\Airline_System.exe
+c:\users\khanhvd\learn c++\airline_system\airline_system\airline_system\airline_system.cpp(19): warning C4101: 'row': unreferenced local variable
+c:\users\khanhvd\learn c++\airline_system\airline_system\airline_system\airline_system.cpp(18): warning C4101: 'res': unreferenced local variable
+Airline_System.obj : error LNK2019: unresolved external symbol mysql_init referenced in function main
+Airline_System.obj : error LNK2019: unresolved external symbol mysql_real_connect referenced in function main
+C:\Users\KhanhVD\Learn C++\Airline_System\Airline_System\x64\Debug\Airline_System.exe : fatal error LNK1120: 2 unresolved externals
