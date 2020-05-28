@@ -23,10 +23,13 @@ int main()
 {
 	//DbConn();
 	conn = DBConnect::initConnect();
+	system("cls");
+	system("title Airlines Reservation System Program");
+	system("color 0f");
 	int input;
 	while (true) {
-		cout << "--------Welcome To Airlines Reservation System--------\n";
-		cout << "\t---Airlines Reservation System Menu---\n";
+		cout << "------------Welcome To Airlines Reservation System------------" << endl;
+		cout << "------------Airlines Reservation System Menu------------" << endl;
 		cout << "1. Reserve Seat.\n";
 		cout << "2. User Ticket\n";
 		cout << "3. Flights Schedule.\n";
@@ -49,8 +52,8 @@ int main()
 		}
 		if (input == 5) {
 			while (true) {
-				cout << "--------Welcome To Airlines Reservation System--------\n";
-				cout << "\t---Airlines Reservation System Menu---\n";
+				cout << "------------Welcome To Airlines Reservation System------------\n";
+				cout << "------------Airlines Reservation System Menu------------\n";
 				cout << "1. Add Flight.\n";
 				cout << "2. Edit Flight.\n";
 				cout << "3. Delete Flight..\n";
