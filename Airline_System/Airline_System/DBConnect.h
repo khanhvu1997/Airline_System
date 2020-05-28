@@ -1,12 +1,14 @@
 #pragma once
 #include <stdlib.h>
 #include <iostream>
+#include <string>
 #include "mysql.h"
 using namespace std;
 #define  IP  "127.0.0.1"
 #define  USERNAME  "root"
 #define  PASSWORD  "1997"
 #define  DB_NAME  "cpp_airlinereservation_db"
+#define  PORT 3306
 class DBConnect
 {
 
@@ -24,7 +26,7 @@ public:
 		}
 		else
 			cout << "Failed To Connect!" << mysql_errno(conn) << endl;
-		conn = mysql_real_connect(conn, IP, USERNAME, PASSWORD, DB_NAME, 0, NULL, 0);
+		conn = mysql_real_connect(conn, IP, USERNAME, PASSWORD, DB_NAME, PORT, NULL, 0);
 		if (conn)
 		{
 			cout << "Database Connected To MySql" << conn << endl;
@@ -36,3 +38,4 @@ public:
 		return conn;
 	}
 };
+
