@@ -4,6 +4,9 @@
 #include <iostream>
 #include "mysql.h"
 #include "DBConnect.h"
+MYSQL* conn;
+MYSQL_RES *res;
+MYSQL_ROW row;
 int checkIn(int low, int high) {
 	int input;
 	while (true) {
@@ -19,6 +22,7 @@ int checkIn(int low, int high) {
 int main() 
 {
 	//DbConn();
+	conn = DBConnect::initConnect();
 	int input;
 	while (true) {
 		cout << "--------Welcome To Airlines Reservation System--------\n";
