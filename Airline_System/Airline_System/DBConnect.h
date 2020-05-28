@@ -4,4 +4,3 @@
 #include "mysql.h"
 using namespace std;
 void DbConn();
-int checkIn();

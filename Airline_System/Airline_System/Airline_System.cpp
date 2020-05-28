@@ -4,7 +4,18 @@
 #include <iostream>
 #include "mysql.h"
 #include "DBConnect.h"
-
+int checkIn(int low, int high) {
+	int input;
+	while (true) {
+		cin >> input;
+		if (input < low || input > high) {
+			cout << "Gia tri khong hop le. Vui long nhap lai!\n";
+		}
+		else
+			break;
+	}
+	return input;
+}
 int main() 
 {
 	//DbConn();
@@ -19,7 +30,7 @@ int main()
 		cout << "5. Flight Details.\n";
 		cout << "6. Exit Program.\n";
 		cout << "Choose One:";
-		cin >> input;
+		input = checkIn(1, 6);
 		if (input == 1) {
 			cout << "Reserve Seat." << endl;
 		}
@@ -42,7 +53,7 @@ int main()
 				cout << "4. Flight Leave And Arrive.\n";
 				cout << "5. Back To Menu.\n";
 				cout << "Choose One:";
-				cin >> input;
+				input = checkIn(1, 5);
 				if (input == 1) {
 					cout << "Add Flight." << endl;
 				}

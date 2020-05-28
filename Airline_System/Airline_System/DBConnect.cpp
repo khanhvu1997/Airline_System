@@ -26,15 +26,3 @@ void DbConn() {
 		puts("Connection to database failded!");
 	}
 }
-int checkIn(int low, int high) {
-	int input;
-	while (true) {
-		cin >> input;
-		if (input < low || input > high) {
-			cout << "Gia tri khong hop le. Vui long nhap lai!\n";
-		}
-		else
-			break;
-	}
-	return input;
-}
