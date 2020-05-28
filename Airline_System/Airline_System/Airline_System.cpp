@@ -21,7 +21,6 @@ int checkIn(int low, int high) {
 }
 int main() 
 {
-	//DbConn();
 	conn = DBConnect::initConnect();
 	system("cls");
 	system("title Airlines Reservation System Program");
