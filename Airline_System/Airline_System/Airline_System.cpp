@@ -2,6 +2,7 @@
 //
 #include <stdlib.h>
 #include <iostream>
+#include <vector>
 #include "mysql.h"
 #include "DBConnect.h"
 using namespace std;
@@ -198,6 +199,65 @@ void flightDetails() {
 		}
 	}
 }
+void ReserveSeat() {
+	cout << "Reserve Seat." << endl;
+	int fNo;
+	int querySeat;
+	string name;
+	string phone;
+	string passport;
+	string ticket;
+	string flightNo;
+	string address;
+	cout << "Enter the Name: \n";
+	cin >> name;
+	cout << "Enter the Phone: \n";
+	cin >> phone;
+	cout << "Enter the Passport: \n";
+	cin >> passport;
+	cout << "Enter the Ticket: \n";
+	cin >> ticket;
+	cout << "Choise Flight No! \n";
+	string query = "Select f_no from flightdetails_tb ";
+	vector<string> flightNoTemp;
+	const char* q = query.c_str();
+	fNo = mysql_query(conn, q);
+	if (fNo == 0) {
+		res = mysql_store_result(conn);
+		while (row = mysql_fetch_row(res)) {
+			cout << "\n*****";
+			flightNoTemp.push_back(row[0]);
+			cout << "\nFlightNo: " << row[0] << "\n";
+		}
+		NoAgain:do {
+			cout << "Enter the FlightNo: \n";
+			cin >> flightNo;
+			if (count(flightNoTemp.begin(), flightNoTemp.end(), flightNo)) {
+				cout << "Flight No Ok!\n";
+				cout << "Enter the Address: \n";
+				cin >> address;
+				string query = "INSERT INTO userreservation_tb (u_name,u_phone,u_passportno,u_ticket,u_flightno,u_address) VALUES ( ";
+				query.append("'").append(name).append("',")
+					.append("'").append(phone).append("',")
+					.append("'").append(passport).append("',")
+					.append("'").append(ticket).append("',")
+					.append("'").append(flightNo).append("',")
+					.append("'").append(address).append("');");
+				cout << "Insert Reserve Seat Successful!\n" << endl;
+				const char* q = query.c_str();
+				querySeat = mysql_query(conn, q);
+				if (querySeat != 0) {
+					cout << mysql_error(conn) << endl;
+				}
+			}
+			else {
+				cout << "Flight No not a valid!\n";
+				goto NoAgain;
+			}
+		} while (!(count(flightNoTemp.begin(), flightNoTemp.end(), flightNo)));
+	}
+
+}
 int main() {
 	conn = DBConnect::initConnect();
 	system("cls");
@@ -216,7 +276,7 @@ int main() {
 		cout << "Choose One:";
 		input = checkIn(1, 6);
 		if (input == 1) {
-			cout << "Reserve Seat." << endl;
+			ReserveSeat();
 		}
 		if (input == 2) {
 			cout << "User Ticket." << endl;
