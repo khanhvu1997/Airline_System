@@ -167,6 +167,43 @@ void flightDelete() {
 		}
 	}
 }
+void flightLeaveArrive() {
+	cout << "Flight Leave And Arrive." << endl;
+	int queryLA;
+	int id = 0;
+	string leave;
+	string arrive;
+	string available;
+	do {
+		cout << "Enter the id: \n";
+		cin >> id;
+		if (!checkId(id)) {
+			cout << " Id not exist. Please choise!\n";
+		}
+	} while (!checkId(id));
+	cout << "Id Exist. Edit Data!\n";
+	cout << "Enter the Leave: ";
+	cin >> leave;
+	cout << "Enter the Arrive: ";
+	cin >> arrive;
+	cout << "Enter the Available: ";
+	cin >> available;
+	std::string s = std::to_string(id);
+	char const *pchar = s.c_str();
+	string query = "UPDATE flightdetails_tb SET ";
+	query
+		.append("f_leave ='").append(leave).append("',")
+		.append("f_arrive ='").append(arrive).append("',")
+		.append("f_available ='").append(available).append("'")
+		.append("WHERE f_id =").append(pchar).append(";");
+	cout << "Update successful!\n" << endl;
+	cout << "Query: " << query.c_str() << endl;
+	const char* q = query.c_str();
+	queryLA = mysql_query(conn, q);
+	if (queryLA != 0) {
+		cout << mysql_error(conn) << endl;
+	}
+}
 void flightDetails() {
 	while (true) {
 		cout << "------------Welcome To Airlines Reservation System------------\n";
@@ -190,7 +227,7 @@ void flightDetails() {
 			flightDelete();
 		}
 		if (input == 4) {
-			cout << "Flight Leave And Arrive." << endl;
+			flightLeaveArrive();
 		}
 		if (input == 5) {
 			cout << "Back To Menu" << endl;
