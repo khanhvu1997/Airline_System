@@ -77,6 +77,7 @@ bool checkId(int id) {
 	}
 	return false;
 }
+
 void EditFlight() {
 	cout << "Edit Flight." << endl;
 	int queryEdit;
@@ -95,40 +96,76 @@ void EditFlight() {
 			cout << " Id not exist. Please choise!\n";
 		}
 	} while (!checkId(id));
-		cout << "Id Exist. Edit Data!\n";
-		cout << "Enter the No: ";
-		cin >> no;
-		cout << "Enter the Name: ";
-		cin >> name;
-		cout << "Enter the From: ";
-		cin >> from;
-		cout << "Enter the Destination: ";
-		cin >> destination;
-		cout << "Enter the Time: ";
-		cin >> time;
-		cout << "Enter the Amount: ";
-		cin >> amount;
-		cout << "Enter the Available: ";
-		cin >> available;
-		std::string s = std::to_string(id);
-		char const *pchar = s.c_str();
-		string query = "UPDATE flightdetails_tb SET ";
-		query.append("f_no ='").append(no).append("',")
-			.append("f_name ='").append(name).append("',")
-			.append("f_from ='").append(from).append("',")
-			.append("f_destination ='").append(destination).append("',")
-			.append("f_time ='").append(time).append("',")
-			.append("f_amount ='").append(amount).append("',")
-			.append("f_available ='").append(available).append("'")
-			.append("WHERE f_id =").append(pchar).append(";");
-		cout << "Update successful!\n" << endl;
-		cout << "Query: " << query.c_str() << endl;
-		const char* q = query.c_str();
-		queryEdit = mysql_query(conn, q);
-		if (queryEdit != 0) {
-			cout << mysql_error(conn) << endl;
+	cout << "Id Exist. Edit Data!\n";
+	cout << "Enter the No: ";
+	cin >> no;
+	cout << "Enter the Name: ";
+	cin >> name;
+	cout << "Enter the From: ";
+	cin >> from;
+	cout << "Enter the Destination: ";
+	cin >> destination;
+	cout << "Enter the Time: ";
+	cin >> time;
+	cout << "Enter the Amount: ";
+	cin >> amount;
+	cout << "Enter the Available: ";
+	cin >> available;
+	std::string s = std::to_string(id);
+	char const *pchar = s.c_str();
+	string query = "UPDATE flightdetails_tb SET ";
+	query.append("f_no ='").append(no).append("',")
+		.append("f_name ='").append(name).append("',")
+		.append("f_from ='").append(from).append("',")
+		.append("f_destination ='").append(destination).append("',")
+		.append("f_time ='").append(time).append("',")
+		.append("f_amount ='").append(amount).append("',")
+		.append("f_available ='").append(available).append("'")
+		.append("WHERE f_id =").append(pchar).append(";");
+	cout << "Update successful!\n" << endl;
+	cout << "Query: " << query.c_str() << endl;
+	const char* q = query.c_str();
+	queryEdit = mysql_query(conn, q);
+	if (queryEdit != 0) {
+		cout << mysql_error(conn) << endl;
+	}
+}
+void flightDelete() {
+	int queryDelete;
+	int id = 0;
+	char available[10] = "A";
+	do {
+		cout << "Enter the id: \n";
+		cin >> id;
+		if (!checkId(id)) {
+			cout << " Id not exist. Please choise!\n";
 		}
-
+	} while (!checkId(id));
+	cout << "Id Exist. Delete Data!\n";
+	std::string s = std::to_string(id);
+	char const *pchar = s.c_str();
+	int checkDelete;
+	string query1 = "Select f_available from flightdetails_tb Where ";
+	query1.append("f_id = ").append(pchar).append(";");
+	cout << "Query: " << query1.c_str() << endl;
+	const char* q1 = query1.c_str();
+	checkDelete = mysql_query(conn, q1);
+	if (checkDelete == 0) {
+		res = mysql_store_result(conn);
+		if (row = mysql_fetch_row(res)) {
+			if (strcmp(row[0], available) == 0) {
+				string query = "DELETE FROM flightdetails_tb WHERE ";
+				query.append("f_id = ").append(pchar).append(" and ").append(" f_available = 'A';");
+				cout << "Query: " << query.c_str() << endl;
+				const char* q = query.c_str();
+				queryDelete = mysql_query(conn, q);
+				cout << "Delete Susccessful!\n" << endl;
+			}
+			else {
+				cout << "Delete UnSusccessful!\n" << endl;
+			}
+		}
+	}
 }
 void flightDetails() {
 	while (true) {
@@ -150,6 +187,7 @@ void flightDetails() {
 		}
 		if (input == 3) {
 			cout << "Delete Flight." << endl;
+			flightDelete();
 		}
 		if (input == 4) {
 			cout << "Flight Leave And Arrive." << endl;
@@ -194,7 +232,7 @@ int main() {
 		}
 		if (input == 6) {
 			cout << "Exit Program." << endl;
-			return 0;
+			exit(0);
 		}
 	}
 	return 0;

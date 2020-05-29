@@ -115,6 +115,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -157,6 +158,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Airline_System.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DBConnect.h" />
+    <ClInclude Include="FlightDetails.h" />
+    <ClInclude Include="UserReservation.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
