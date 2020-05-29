@@ -60,6 +60,76 @@ void Insert() {
 		cout << mysql_error(conn) << endl;
 	}
 }
+bool checkId(int id) {
+	int check;
+	std::string s = std::to_string(id);
+	char const *pchar = s.c_str();
+	string query = "Select f_id from flightdetails_tb Where ";
+	query.append("f_id = ").append(pchar).append(";");
+	const char* q = query.c_str();
+	check = mysql_query(conn, q);
+	if (!check)
+	{
+		res = mysql_store_result(conn);
+		if (row = mysql_fetch_row(res)) {
+			return true;
+		}
+	}
+	return false;
+}
+void EditFlight() {
+	cout << "Edit Flight." << endl;
+	int queryEdit;
+	int id = 0;
+	string no;
+	string name;
+	string from;
+	string destination;
+	string time;
+	string amount;
+	string available;
+	do {
+		cout << "Enter the id: \n";
+		cin >> id;
+		if (!checkId(id)) {
+			cout << " Id not exist. Please choise!\n";
+		}
+	} while (!checkId(id));
+		cout << "Id Exist. Edit Data!\n";
+		cout << "Enter the No: ";
+		cin >> no;
+		cout << "Enter the Name: ";
+		cin >> name;
+		cout << "Enter the From: ";
+		cin >> from;
+		cout << "Enter the Destination: ";
+		cin >> destination;
+		cout << "Enter the Time: ";
+		cin >> time;
+		cout << "Enter the Amount: ";
+		cin >> amount;
+		cout << "Enter the Available: ";
+		cin >> available;
+		std::string s = std::to_string(id);
+		char const *pchar = s.c_str();
+		string query = "UPDATE flightdetails_tb SET ";
+		query.append("f_no ='").append(no).append("',")
+			.append("f_name ='").append(name).append("',")
+			.append("f_from ='").append(from).append("',")
+			.append("f_destination ='").append(destination).append("',")
+			.append("f_time ='").append(time).append("',")
+			.append("f_amount ='").append(amount).append("',")
+			.append("f_available ='").append(available).append("'")
+			.append("WHERE f_id =").append(pchar).append(";");
+		cout << "Update successful!\n" << endl;
+		cout << "Query: " << query.c_str() << endl;
+		const char* q = query.c_str();
+		queryEdit = mysql_query(conn, q);
+		if (queryEdit != 0) {
+			cout << mysql_error(conn) << endl;
+		}
+
+}
 void flightDetails() {
 	while (true) {
 		cout << "------------Welcome To Airlines Reservation System------------\n";
@@ -76,7 +146,7 @@ void flightDetails() {
 			Insert();
 		}
 		if (input == 2) {
-			cout << "Edit Flight." << endl;
+			EditFlight();
 		}
 		if (input == 3) {
 			cout << "Delete Flight." << endl;
@@ -90,8 +160,7 @@ void flightDetails() {
 		}
 	}
 }
-int main() 
-{
+int main() {
 	conn = DBConnect::initConnect();
 	system("cls");
 	system("title Airlines Reservation System Program");
@@ -125,10 +194,8 @@ int main()
 		}
 		if (input == 6) {
 			cout << "Exit Program." << endl;
-			return;
+			return 0;
 		}
-
 	}
-
 	return 0;
 }
