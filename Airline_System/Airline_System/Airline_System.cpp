@@ -235,6 +235,29 @@ void flightDetails() {
 		}
 	}
 }
+void flightSchedule() {
+	cout << "Flights Schedule." << endl;
+	int qstate;
+	string query = "Select f_no,f_name,f_from,f_destination,f_leave,f_arrive from flightdetails_tb where f_available = 'A';";
+	const char* q = query.c_str();
+	qstate = mysql_query(conn, q);
+	if (qstate == 0)
+	{
+		res = mysql_store_result(conn);
+		while (row = mysql_fetch_row(res)) {
+			cout << "\n*****";
+			cout << "\nNo: " << row[0];
+			cout << "\nName: " << row[1];
+			cout << "\nFrom: " << row[2];
+			cout << "\nDestination: " << row[3];
+			cout << "\nLeave: " << row[4];
+			cout << "\nArrive: " << row[5] << "\n";
+		}
+	}
+	else {
+		cout << "Query failed" << mysql_error(conn) << endl;
+	}
+}
 int main() {
 	conn = DBConnect::initConnect();
 	system("cls");
@@ -259,7 +282,7 @@ int main() {
 			cout << "User Ticket." << endl;
 		}
 		if (input == 3) {
-			cout << "Flights Schedule." << endl;
+			flightSchedule();
 		}
 		if (input == 4) {
 			cout << "Display Passenger." << endl;
