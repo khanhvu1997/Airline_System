@@ -319,6 +319,33 @@ void ReserveSeat() {
 	}
 
 }
+void UserTicket() {
+	cout << "User Ticket." << endl;
+	int queryTicket;
+	string ticket;
+	cout << "Enter the Ticket: \n";
+	cin >> ticket;
+	string query = "Select * from userreservation_tb Where ";
+	query.append("u_ticket like ").append("'%").append(ticket).append("%';");
+	const char* q = query.c_str();
+	queryTicket = mysql_query(conn, q);
+	if (queryTicket == 0) {
+		res = mysql_store_result(conn);
+		while (row = mysql_fetch_row(res)) {
+			cout << "Info User Ticket.\n" << endl;
+			cout << "\n*****";
+			cout << "\nName: " << row[1];
+			cout << "\nPhone: " << row[2];
+			cout << "\nPassport: " << row[3];
+			cout << "\nTicket: " << row[4];
+			cout << "\nFlightNo: " << row[5];
+			cout << "\nAddress: " << row[6] << "\n";
+		}
+		if (!(row = mysql_fetch_row(res))) {
+			cout << "Ticket not exist!" << endl;
+		}
+	}
+}
 int main() {
 	conn = DBConnect::initConnect();
 	system("cls");
@@ -340,7 +367,7 @@ int main() {
 			ReserveSeat();
 		}
 		if (input == 2) {
-			cout << "User Ticket." << endl;
+			UserTicket();
 		}
 		if (input == 3) {
 			flightSchedule();
