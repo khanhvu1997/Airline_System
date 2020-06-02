@@ -346,6 +346,25 @@ void UserTicket() {
 		}
 	}
 }
+void DisplayPassenger() {
+	cout << "Display Passenger." << endl;
+	int queryPassenger;
+	string query = "Select * from userreservation_tb;";
+	const char* q = query.c_str();
+	queryPassenger = mysql_query(conn, q);
+	if (queryPassenger == 0) {
+		res = mysql_store_result(conn);
+		while (row = mysql_fetch_row(res)) {
+			cout << "\n*****";
+			cout << "\nName: " << row[1];
+			cout << "\nPhone: " << row[2];
+			cout << "\nPassport: " << row[3];
+			cout << "\nTicket: " << row[4];
+			cout << "\nFlightNo: " << row[5];
+			cout << "\nAddress: " << row[6] << "\n";
+		}
+	}
+}
 int main() {
 	conn = DBConnect::initConnect();
 	system("cls");
@@ -373,7 +392,7 @@ int main() {
 			flightSchedule();
 		}
 		if (input == 4) {
-			cout << "Display Passenger." << endl;
+			DisplayPassenger();
 		}
 		if (input == 5) {
 			flightDetails();
